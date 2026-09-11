@@ -36,9 +36,13 @@ Request](https://github.com/marcinjahn/gnome-do-not-disturb-while-screen-sharing
 
 To run the extension locally "from sources":
 
-```
-git clone git@github.com:marcinjahn/gnome-do-not-disturb-while-screen-sharing-or-recording-extension.git
-cd gnome-do-not-disturb-while-screen-sharing-or-recording-extension
+```bash
+# Using Makefile
+make install
+make link
+make enable
+
+# Or using npm directly
 npm i
 npm run build
 npm run linkdist

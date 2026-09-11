@@ -11,5 +11,9 @@
       <default>true</default>
       <description>Decides whether Do Not Disturb should be automatically switched on while screen recording</description>
     </key>
+    <key name="mute-sounds-on-dnd" type="b">
+      <default>false</default>
+      <description>Decides whether notification sounds should be muted when Do Not Disturb is automatically activated</description>
+    </key>
   </schema>
 </schemalist>

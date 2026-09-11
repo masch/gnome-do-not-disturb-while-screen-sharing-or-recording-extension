@@ -5,8 +5,12 @@ export const SettingsPath =
 
 const DoNotDisturbOnScreenSharingSetting = "dnd-on-screen-sharing";
 const DoNotDisturbOnScreenRecordingSetting = "dnd-on-screen-recording";
+const MuteSoundsOnDndSetting = "mute-sounds-on-dnd";
 
-type AvailableSettings = "dnd-on-screen-sharing" | "dnd-on-screen-recording";
+type AvailableSettings =
+  | "dnd-on-screen-sharing"
+  | "dnd-on-screen-recording"
+  | "mute-sounds-on-dnd";
 
 export class SettingsManager {
   private settings: Gio.Settings;
@@ -29,6 +33,14 @@ export class SettingsManager {
 
   setShouldDndOnScreenRecording(value: boolean) {
     this.settings.set_boolean(DoNotDisturbOnScreenRecordingSetting, value);
+  }
+
+  getShouldMuteSoundsOnDnd(): boolean {
+    return this.settings.get_boolean(MuteSoundsOnDndSetting);
+  }
+
+  setShouldMuteSoundsOnDnd(value: boolean) {
+    this.settings.set_boolean(MuteSoundsOnDndSetting, value);
   }
 
   connectToChanges(settingName: AvailableSettings, func: () => void): number {

@@ -36,16 +36,22 @@ export default class DoNotDisturbWhileScreenSharingOrRecordingExtension extends 
     );
   }
 
+  private updateDndState(isActive: boolean) {
+    const muteSounds = this._settings?.getShouldMuteSoundsOnDnd() ?? false;
+
+    if (isActive) {
+      this._dndManager?.turnDndOn(muteSounds);
+    } else {
+      this._dndManager?.turnDndOff(muteSounds);
+    }
+  }
+
   private handleScreenSharing(status: ScreenSharingStatus) {
     if (!this._settings?.getShouldDndOnScreenSharing()) {
       return;
     }
 
-    if (status === ScreenSharingStatus.sharing) {
-      this._dndManager?.turnDndOn();
-    } else {
-      this._dndManager?.turnDndOff();
-    }
+    this.updateDndState(status === ScreenSharingStatus.sharing);
   }
 
   private handleScreenRecording(status: ScreenRecordingStatus) {
@@ -53,11 +59,7 @@ export default class DoNotDisturbWhileScreenSharingOrRecordingExtension extends 
       return;
     }
 
-    if (status === ScreenRecordingStatus.recording) {
-      this._dndManager?.turnDndOn();
-    } else {
-      this._dndManager?.turnDndOff();
-    }
+    this.updateDndState(status === ScreenRecordingStatus.recording);
   }
 
   disable() {

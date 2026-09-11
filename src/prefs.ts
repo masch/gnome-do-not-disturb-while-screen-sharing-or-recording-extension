@@ -21,6 +21,15 @@ export default class Preferences extends ExtensionPreferences {
     this.setupScreenSharing(settings, group);
 
     page.add(group);
+
+    const soundGroup = new Adw.PreferencesGroup({
+      title: "Sound",
+      description: "Configure notification sound behavior during Do Not Disturb",
+    });
+
+    this.setupMuteSounds(settings, soundGroup);
+
+    page.add(soundGroup);
     window.add(page);
   }
 
@@ -58,6 +67,29 @@ export default class Preferences extends ExtensionPreferences {
 
     toggle.connect("state-set", (_, state) => {
       settings.setShouldDndOnScreenSharing(state);
+
+      return false;
+    });
+
+    row.add_suffix(toggle);
+    row.activatable_widget = toggle;
+
+    group.add(row);
+  }
+
+  setupMuteSounds(settings: SettingsManager, group: Adw.PreferencesGroup) {
+    const row = new Adw.ActionRow({
+      title: "Mute Notification Sounds",
+      subtitle: "Also mute notification sounds when Do Not Disturb is automatically activated",
+    });
+
+    const toggle = new Gtk.Switch({
+      active: settings.getShouldMuteSoundsOnDnd(),
+      valign: Gtk.Align.CENTER,
+    });
+
+    toggle.connect("state-set", (_, state) => {
+      settings.setShouldMuteSoundsOnDnd(state);
 
       return false;
     });
